@@ -1,0 +1,39 @@
+name: calling_application
+description: "Calling Application"
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.10.7
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+  shared_preferences: ^2.5.4
+  web_socket_channel: ^3.0.3
+  flutter_local_notifications: ^20.0.0
+  vibration: ^3.1.5
+  flutter_foreground_task: ^6.1.3
+
+  bcrypt: ^1.1.3
+  google_fonts: ^6.1.0
+  image_picker: ^1.0.7
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.13.1
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: assets/icon/icon.png
+  min_sdk_android: 21
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/icon/
