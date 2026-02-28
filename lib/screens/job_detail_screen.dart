@@ -31,6 +31,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
   // NEW fields
   final _sparePartCtrl = TextEditingController();
   final _estimateCostCtrl = TextEditingController();
+  final _estimateTimeCtrl = TextEditingController();
   final _machineCondCtrl = TextEditingController();
   final _resultActionCtrl = TextEditingController();
 
@@ -76,6 +77,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
   void dispose() {
     _sparePartCtrl.dispose();
     _estimateCostCtrl.dispose();
+    _estimateTimeCtrl.dispose();
     _machineCondCtrl.dispose();
     _resultActionCtrl.dispose();
     super.dispose();
@@ -162,6 +164,21 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
       return;
     }
 
+    // validate estimate_time
+    final estimateTime = int.tryParse(_estimateTimeCtrl.text.trim());
+    if (estimateTime == null || estimateTime <= 0) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'กรุณากรอกเวลาในการซ่อมแซมเป็นจำนวนนาที',
+            style: GoogleFonts.kanit(),
+          ),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
     // ✅ REQUIRED: ต้องแนบรูปทุกครั้ง
     if (_photo == null) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -192,6 +209,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
         "result_action": _resultActionCtrl.text.trim(),
         "cause_detail": _causeDetailSelected,
         "can_use": _canUse,
+        "estimate_time": estimateTime,
       };
 
       widget.onSendCommand(finishPayload);
@@ -522,6 +540,16 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
                       requiredField: true,
                       keyboardType: TextInputType.number,
                       hint: 'เช่น 2500',
+                    ),
+                    const SizedBox(height: 16),
+
+                    _textInput(
+                      controller: _estimateTimeCtrl,
+                      label: 'เวลาในการซ่อมแซมหรือแก้ไข (นาที) *',
+                      icon: Icons.timer_outlined,
+                      requiredField: true,
+                      keyboardType: TextInputType.number,
+                      hint: 'เช่น 30, 60, 120',
                     ),
                     const SizedBox(height: 16),
 
